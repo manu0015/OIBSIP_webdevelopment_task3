@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TempShift</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="container">
+    <h1>TempShift</h1>
+    <p class="subtitle">a smart temperature translator</p>
+
+    <div class="input-group">
+      <span class="unit-label">Enter value</span>
+      <input type="number" id="value" placeholder="00.00">
+    </div>
+
+    <div class="input-group">
+      <span class="unit-label">From</span>
+      <select id="from">
+        <option value="c">Celsius (°C)</option>
+        <option value="f">Fahrenheit (°F)</option>
+        <option value="k">Kelvin (K)</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <span class="unit-label">To</span>
+      <select id="to">
+        <option value="f">Fahrenheit (°F)</option>
+        <option value="c">Celsius (°C)</option>
+        <option value="k">Kelvin (K)</option>
+      </select>
+    </div>
+
+    <button onclick="convert()">Convert</button>
+
+    <div class="result">
+      <span>Result</span>
+      <h2 id="output">—</h2>
+    </div>
+  </main>
+
+<script>
+function convert() {
+  const val = parseFloat(document.getElementById("value").value);
+  const from = document.getElementById("from").value;
+  const to = document.getElementById("to").value;
+  const out = document.getElementById("output");
+
+  if (isNaN(val)) {
+    out.textContent = "Invalid input";
+    return;
+  }
+
+  let celsius;
+
+  if (from === "c") celsius = val;
+  else if (from === "f") celsius = (val - 32) * 5/9;
+  else celsius = val - 273.15;
+
+  let result;
+  if (to === "c") result = celsius;
+  else if (to === "f") result = celsius * 9/5 + 32;
+  else result = celsius + 273.15;
+
+  out.textContent =
+    result.toFixed(2) +
+    (to === "c" ? " °C" : to === "f" ? " °F" : " K");
+}
+</script>
+
+</body>
+</html>
